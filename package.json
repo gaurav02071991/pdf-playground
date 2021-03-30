@@ -67,6 +67,7 @@
     "ttic-ga-ho3": "nodemon  dev-playground/server.js --watch D:\\pdfAssemblerAndCompanyPackages\\company-packages\\ttic-ga-ho3\\data\\formtemplates",
     "company3": "nodemon  dev-playground/server.js --watch ./dev-playground --watch D:\\pdfAssemblerAndCompanyPackages\\company3\\company-packages\\ttic-ga-ho3\\data\\formtemplates",
     "dev": "nodemon  dev-playground/server.js",
+    "start": "nodemon  dev-playground/server.js",
     "auto": "./node_modules/.bin/nodemon bootservice.js --exec ./node_modules/.bin/babel-node"
   },
   "repository": {
