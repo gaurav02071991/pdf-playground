@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang='en' ng-app='pdfmake'>
+
+<head>
+	<meta charset='utf-8'>
+	<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js'></script>
+	<!--<link rel='stylesheet' href='pdfjs/viewer.css'>-->
+	<link rel='stylesheet' href='/pdfmake.css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller='PlaygroundController'>
+
+	<div class='playground'>
+		<div class='container'>
+
+			<ul id='exampleList'>
+				<li ng-repeat='e in examples' ng-click='e.activate()'>{{e.name}}</li>
+				<li><input type="file" id="fileinput" /></li>
+				<button id="generatePdf" onclick="generatePdf()" style="background-color: brown;">Generate pdf</button>
+
+			</ul>
+
+		</div>
+	</div>
+
+	<div class='playgroundBody'>
+		<div class='notEnoughSpace'>
+			<div class='container'>
+				<h1>Playground does not make too much sense when horizontal resolution is below 300px</h1>
+			</div>
+		</div>
+		<div class='content'>
+			<div id='editor'></div>
+
+			<iframe id='pdfV'></iframe>
+			<iframe id='pdfV2'>
+			</iframe>
+		</div>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		function readSingleFile(e) {
+			let file = e.target.files[0];
+               // for sending to server
+			   let reader = new FileReader();
+			   reader.readAsDataURL(file);
+			
+			reader.onload = function () {
+				var data = reader.result;
+            let base64 = data.replace(/^[^,]*,/, '');
+           let info = {
+                resume: base64 //either leave this `basae64` or make it `data` if you want to leave the `data:application/pdf;base64,` at the start
+            };
+
+				$.ajax({
+				url: '/generatetemplate',
+				method: 'POST',
+				data:   info,
+				dataType: "JSON",
+				success: function (data) {
+					
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+								document.getElementById('fileinput').value = "";
+								var html = `<div>${JSON.stringify(data)}</div>`
+								document.getElementById('pdfV2').src ="";
+							}
+							let finaldata=data.newdata?data.newdata:data;
+							document.getElementById('pdfV').src = finaldata
+							if(finaldata.toLowerCase().indexOf('error')!==-1 && finaldata.toLowerCase().indexOf('base64')===-1){
+								document.getElementById('fileinput').value = "";
+								var html = `<div style= "color:red">${JSON.stringify(finaldata)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+							}
+							else if(data.metadata){
+								var html = `<div style= "color:red">${JSON.stringify(data.metadata)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);	
+							}
+
+
+				},
+				error: function (response) {
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+								document.getElementById('fileinput').value = "";
+								var html = `<div style= "color:red">${JSON.stringify(data)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+							}
+
+				},
+				complete: function(response) {
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+						document.getElementById('fileinput').value = "";
+						var html = `<div style= "color:red">${JSON.stringify(error)}</div>`
+						document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+					}
+           }
+			});
+			};
+
+			reader.onerror = function () {
+				console.log(reader.error);
+			};
+		}
+
+
+		document.getElementById('fileinput')
+			.addEventListener('change', readSingleFile, false);
+	</script>
+
+	<script type="text/javascript" charset="utf-8">
+		function PlaygroundController($scope, $http) {
+			$scope.examples = [];
+			var editor = ace.edit('editor');
+			editor.session.setMode("ace/mode/javascript")
+			setupEditor(editor);
+			var names = ['basics'];
+			const a4PageProperty = {
+				pageMargins: { left: 51, right: 38, top: 21, bottom: 1 },
+				defaultStyle: { fontSize: 9, lineHeight: 0.9, columnGap: 29, alignment: 'justify' },
+				pageSize: { width: 612, height: 792 }
+			}
+			var i = 0;
+			['basics'].forEach(function (example) {
+				if (example) {
+					$scope.examples.push({
+						name: names[i++],
+						activate: function () {
+							$http.get('samples/' + example).success(function (data) {
+								editor.getSession().setValue('// put form request in her\n\nvar formrequest = {\n' + ('').replace(/(\r?)\n/g, '\n').replace(/(^)/gm, '\t') + '\n}\n\ncsp="TTIC:FL:AF3";');
+							});
+						}
+					});
+				}
+
+			});
+
+			var old = localStorage.pdfMakeDD;
+
+			if (!old) {
+				$scope.examples[0].activate();
+			} else {
+				editor.getSession().setValue(old);
+			}
+
+			var timer;
+
+			function setupEditor() {
+				var lastGen, lastChanged;
+
+				editor.setTheme('ace/theme/monokai');
+				editor.getSession().setMode('ace/mode/javascript');
+				editor.resize()
+				editor.setHighlightActiveLine(false);
+
+				editor.getSession().on('change', function (e) {
+					if (timer) {
+						clearTimeout(timer);
+					}
+					lastChanged = new Date();
+
+					localStorage.pdfMakeDD = editor.getSession().getValue();
+
+					timer = setTimeout(function () {
+						if (!lastGen || lastGen < lastChanged) {
+							generate();
+						};
+					}, 300);
+				});
+				editor.setHighlightActiveLine(false);
+				function generate() {
+					lastGen = new Date();
+
+					var content = editor.getSession().getValue();
+
+					$http.post('/pdf', { content: content }).
+						success(function (data, status, headers, config) {
+							if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+								document.getElementById('fileinput').value = "";
+								var html = `<div>${JSON.stringify(data)}</div>`
+								document.getElementById('pdfV2').src ="";
+							}
+							let finaldata=data.newdata?data.newdata:data;
+							document.getElementById('pdfV').src = finaldata
+							if(finaldata.toLowerCase().indexOf('error')!==-1 && finaldata.toLowerCase().indexOf('base64')===-1){
+								document.getElementById('fileinput').value = "";
+								var html = `<div style= "color:red">${JSON.stringify(finaldata)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+							}
+							else if(data.metadata){
+								var html = `<div style= "color:red">${JSON.stringify(data.metadata)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);	
+							}
+
+						}).
+						error(function (data, status, headers, config) {
+							if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+								document.getElementById('fileinput').value = "";
+								var html = `<div style= "color:red">${JSON.stringify(data)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+							}
+
+						});
+				}
+
+			}
+		};
+	</script>
+	<script type="text/javascript" charset="utf-8">
+		function generatePdf() {
+			var editor = ace.edit('editor');
+			editor.session.setMode("ace/mode/javascript")
+			var content = editor.getSession().getValue();
+			eval(content);
+			let newrequest = JSON.stringify(formrequest);
+			console.log(PORT);
+			 
+			$.ajax({
+				url: '/generatepdf',
+				method: 'POST',
+				headers: {
+					"harmony-csp": csp
+				},
+				data: { pdf: newrequest, PORT },
+				success: function (data) {
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+						document.getElementById('fileinput').value = "";
+						var html = `<div>${JSON.stringify(data)}</div>`
+						document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+					}
+					if(data.toLowerCase().indexOf('error')!==-1){
+								document.getElementById('fileinput').value = "";
+								var html = `<div style= "color:red">${JSON.stringify(data)}</div>`
+								document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+					}
+
+
+				},
+				error: function (response) {
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+						document.getElementById('fileinput').value = "";
+						var html = `<div style= "color:red">${JSON.stringify(error)}</div>`
+						document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+					}
+
+				},
+				complete: function(response) {
+					if (document.getElementById('fileinput').value.indexOf('fakepath') === -1) {
+						document.getElementById('fileinput').value = "";
+						var html = `<div style= "color:red">${JSON.stringify(error)}</div>`
+						document.getElementById('pdfV2').src = "data:text/html;charset=utf-8," + escape(html);
+					}
+           }
+			});
+		}
+	</script>
+
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+	<script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js'></script>
+
+	<script type="text/javascript" src="/playground.js"></script>
+
+	<!--<script type="text/javascript" charset="utf-8" src='ace-builds/src-min/ace.js'></script>-->
+	<!-- <script type="text/javascript" charset="utf-8" src='/ace.js'></script> -->
+
+	<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ext-beautify.js'></script> -->
+	<!-- <script type="text/javascript" charset="utf-8" src='/newace.js'></script> -->
+</body>
+
+</html>

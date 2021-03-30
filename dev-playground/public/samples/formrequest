@@ -1,0 +1,325 @@
+{
+    "combine": false,
+    "formInfo": {
+        "displayOnDec": [],
+        "forms": [
+            {
+                "editionDate": "01 17",
+                "formName": "POLICY CANCELLATION (Non-Payment/Final Cancel)",
+                "formNumber": "TTIC CX",
+                "printOrder": 1,
+                "showOnDec": false,
+                "variable": true
+            }
+        ]
+    },
+    "data": {
+        "transactionType": "Non-Payment Notice",
+        "policy": {
+            "cancelDate": "2019-02-20T09:24:12.477Z",
+            "cancelReason": "Claims Frequency",
+            "customerServicePhone": "9876543210",
+            "customerServiceEmail": "customerservice@typtap.com",
+            "policyTerm": 1,
+            "billPlan": "Annual",
+            "billToId": "58eb5f0f685c220014050f48",
+            "policyHolders": [
+                {
+                    "_id": "58eb5f0f685c220014050f48",
+                    "emailAddress": "test@typtap.com",
+                    "primaryPhoneNumber": "9999999999",
+                    "lastName": "Stark anuj",
+                    "firstName": "Tony",
+                    "entityType": "Person",
+                    "order": 0
+                },
+                {
+                    "_id": "58eb5f0f685c220014050f48",
+                    "emailAddress": "test@typtap.com",
+                    "primaryPhoneNumber": "9999999999",
+                    "lastName": "Rogers",
+                    "firstName": "Steve",
+                    "entityType": "Person",
+                    "order": 1
+                }
+            ],
+            "endDate": "2018-04-27T14:10:08.137Z",
+            "transactionType": "Pending Underwriting Cancellation",
+            "additionalInterests": [
+                {
+                    "_id": "58fe7ba598350f001393f5f9",
+                    "name2": "Watson",
+                    "name1": "Shawn",
+                    "order": 0,
+                    "type": "Mortgagee",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "zipExtension": "5488",
+                        "state": "FL",
+                        "_id": "58fe7ba598350f001393f5fa",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5fb"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "1stMtgRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5f6",
+                    "name2": "Rogers",
+                    "name1": "Steve",
+                    "order": 1,
+                    "type": "Mortgagee",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "zipExtension": "5488",
+                        "state": "FL",
+                        "_id": "58fe7ba598350f001393f5f7",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5f8"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "2ndMtgRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5f3",
+                    "name2": "Cumberbatch",
+                    "name1": "Benedict",
+                    "order": 0,
+                    "type": "Additional Insured",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "zipExtension": "5488",
+                        "state": "FL",
+                        "_id": "58fe7ba598350f001393f5f4",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5f5"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "1stAddInsdRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5f0",
+                    "name2": "Cumberbatch",
+                    "name1": "Benedict",
+                    "order": 1,
+                    "type": "Additional Insured",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "zipExtension": "5488",
+                        "state": "FL",
+                        "_id": "58fe7ba598350f001393f5f1",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5f2"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "2ndAddInsdRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5ed",
+                    "name2": "Stark",
+                    "name1": "Tony",
+                    "order": 0,
+                    "type": "Additional Interest",
+                    "mailingAddress": {
+                        "city": "1stAddIntCity",
+                        "zip": "1stAddIntZip",
+                        "zipExtension": "5488",
+                        "state": "1stAddIntState",
+                        "_id": "58fe7ba598350f001393f5ee",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5ef"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "1stAddIntRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5ea",
+                    "name2": "Watson",
+                    "name1": "Shawn",
+                    "order": 1,
+                    "type": "Additional Interest",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "zipExtension": "5488",
+                        "state": "FL",
+                        "_id": "58fe7ba598350f001393f5eb",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5ec"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "2ndAddIntRefNum"
+                },
+                {
+                    "_id": "58fe7ba598350f001393f5e1",
+                    "name2": "Cumberbatch",
+                    "name1": "Benedict",
+                    "order": 0,
+                    "type": "Bill Payer",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "state": "FL",
+                        "zipExtension": "5488",
+                        "_id": "58fe7ba598350f001393f5e2",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5e3"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "BillPayRefNum"
+                },
+                {
+                    "_id": "003",
+                    "name2": "Holmes",
+                    "name1": "Sherlock",
+                    "order": 0,
+                    "type": "Premium Finance Company",
+                    "mailingAddress": {
+                        "city": "CLEARWATER",
+                        "zip": "33764",
+                        "state": "FL",
+                        "zipExtension": "5488",
+                        "_id": "58fe7ba598350f001393f5e2",
+                        "country": {
+                            "displayText": "United States of America",
+                            "code": "USA",
+                            "_id": "58fe7ba598350f001393f5e3"
+                        },
+                        "address2": "C/O MARCATOS FINANCIAL GROUP",
+                        "address1": "18167 US HWY 19 STE 200"
+                    },
+                    "active": true,
+                    "referenceNumber": "PremFinRefNum"
+                }
+            ],
+            "policyNumber": "12-1000307-01",
+            "policyHolderMailingAddress": {
+                "city": "CLEARWATER",
+                "zip": "201301",
+                "state": "FL",
+                "_id": "58eb5ffd685c220014050fae",
+                "zipExtension": "5488",
+                "country": {
+                    "displayText": "United States of America",
+                    "code": "USA",
+                    "_id": "58eb5ffd685c220014050faf"
+                },
+                "address2": "C/O MARCATOS FINANCIAL GROUP",
+                "careOf": "Sangram",
+                "address1": "18167 US HWY 19 STE 200"
+            },
+            "property": {
+                "physicalAddress": {
+                    "city": "CLEARWATER",
+                    "latitude": 26.01711,
+                    "zip": "33764",
+                    "state": "FL",
+                    "_id": "58eb5e95685c220014050e20",
+                    "address2": "C/O MARCATOS FINANCIAL GROUP",
+                    "longitude": -80.13362,
+                    "county": "BROWARD",
+                    "address1": "18167 US HWY 19 STE 200"
+                }
+            },
+            "__v": 0,
+            "issueDate": "2017-03-15T18:57:04.898Z",
+            "policyVersion": 1,
+            "product": "AF3",
+            "active": true
+        },
+        "agent": {
+            "_id": "58f0a45bc4715c3f92c5be78",
+            "agentname": "WALLY WAGONER",
+            "emailAddress": "testing@typtap.com",
+            "faxNumber": "",
+            "firstName": "Benedict",
+            "lastName": "Cumberbatch",
+            "licenseNumber": "W180087",
+            "mailingAddress": {
+                "address1": "18167 US HWY 19 STE 200",
+                "address2": "C/O MARCATOS FINANCIAL GROUP",
+                "city": "CLEARWATER",
+                "zip": 34471
+            },
+            "primaryPhoneNumber": "3525099008",
+            "secondaryPhoneNumber": "8137777777",
+            "status": "Active"
+        },
+        "agency": {
+            "_id": "58f0a44ec4715c3f92c5be58",
+            "companyCode": "TTIC",
+            "state": "FL",
+            "agencyCode": 20000,
+            "displayName": "Typtap Management Company",
+            "taxIdNumber": 810922384,
+            "taxClassification": "Corporation",
+            "tier": 940,
+            "primaryAgentCode": 60000,
+            "mailingAddress": {
+                "address1": "18167 US HWY 19 STE 200",
+                "address2": "C/O MARCATOS FINANCIAL GROUP",
+                "city": "CLEARWATER",
+                "state": "FL",
+                "zip": 34471
+            },
+            "physicalAddress": {
+                "address1": "3001 S.E. MARICAMP ROAD",
+                "address2": "",
+                "city": "OCALA",
+                "county": "MARION",
+                "state": "FL",
+                "zip": 34471,
+                "latitude": "NULL",
+                "longitude": "NULL"
+            },
+            "primaryPhoneNumber": "3525099008",
+            "secondaryPhoneNumber": "8442897968",
+            "faxNumber": 3525334073,
+            "principalEmailAddress": "test123@typtap.com",
+            "licenseNumber": "L095305",
+            "licenseExpirationDate": "2015-12-08T00:00:00",
+            "status": "Active"
+        },
+        "dateStamp": "20170420T0600Z"
+    },
+    "folderName": "PolicyCancellation"
+}

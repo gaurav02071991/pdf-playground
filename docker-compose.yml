@@ -1,0 +1,50 @@
+version: "2"
+services:
+  pdf-playground:
+    container_name: pdf-playground
+    build:
+      context: .
+    command:
+      npm run dev
+    ports:
+      - "12345:80"
+      - "9229:9229"
+    # depends_on:
+      # - "mongo"
+      # - "company-pkg"
+    environment:
+      - "SERVICE_VERSION=v1"
+      - "PORT=80"
+      - "NODE_TLS_REJECT_UNAUTHORIZED=0"
+  # mongo:
+  #   container_name: mongo
+  #   image: "mongo"
+  #   ports:
+  #     - "27017:27017"
+  # company-pkg:
+  #   build: 
+  #     context: ../../../../../pdfAssemblerAndCompanyPackages/company2/company-packages
+  #     args:
+  #       COMPANY: ttic-ma-ho3 
+  #   container_name: company-pkg
+  #   depends_on:
+  #     - formsbucket
+  #   environment:
+  #     - "MONGO_URL=mongodb://mongo:27017/harmony"
+  #     - "NODE_TLS_REJECT_UNAUTHORIZED=0"
+  #     - "AWS_BUCKET_NAME=harmony-form-templates"
+  #     - AWS_ACCESS_KEY_ID=foo
+  #     - AWS_SECRET_ACCESS_KEY=bar
+  #     - AWS_REGION=us-east-1
+  #     - AWS_ENDPOINT=http://localstack:4566
+  # formsbucket:
+  #   image: exzeo/mock-s3-bucket
+  #   container_name: formsbucket
+  #   environment:
+  #     - AWS_ACCESS_KEY_ID=foo
+  #     - AWS_SECRET_ACCESS_KEY=bar
+  #     - AWS_DEFAULT_REGION=us-east-1
+  #     - AWS_ENDPOINT=http://localstack:4566
+  #     - "BUCKET_NAME=harmony-form-templates"    
+
+    
